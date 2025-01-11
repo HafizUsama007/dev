@@ -37,16 +37,19 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          NEXT_PUBLIC_BASE_PATH: /dev # Changed from /cv to /dev
+          NEXT_PUBLIC_BASE_PATH: /dev
 
       - name: Configure Pages
         uses: actions/configure-pages@v4
 
+      # Single artifact upload
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./out
+          name: production-pages # Unique name to prevent conflicts
 
       - name: Deploy to GitHub Pages
         id: deployment
+        if: success()
         uses: actions/deploy-pages@v4
