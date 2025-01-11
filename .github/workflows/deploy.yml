@@ -10,13 +10,11 @@ permissions:
   pages: write
   id-token: write
 
-# Only allow one concurrent deployment to prevent multiple artifacts
 concurrency:
   group: 'pages'
   cancel-in-progress: true
 
 jobs:
-  # Single job for both build and deploy to prevent artifact conflicts
   deploy:
     environment:
       name: github-pages
@@ -39,7 +37,7 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          NEXT_PUBLIC_BASE_PATH: /cv
+          NEXT_PUBLIC_BASE_PATH: /dev # Changed from /cv to /dev
 
       - name: Configure Pages
         uses: actions/configure-pages@v4
