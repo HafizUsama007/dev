@@ -10,12 +10,14 @@ permissions:
   pages: write
   id-token: write
 
+# Only allow one concurrent deployment to prevent multiple artifacts
 concurrency:
   group: 'pages'
   cancel-in-progress: true
 
 jobs:
-  build-and-deploy:
+  # Single job for both build and deploy to prevent artifact conflicts
+  deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -34,16 +36,10 @@ jobs:
           npm ci
           npm install sharp
 
-      - name: Build with Next.js
+      - name: Build
         run: npm run build
         env:
           NEXT_PUBLIC_BASE_PATH: /cv
-
-      # Create .nojekyll file
-      - name: Create .nojekyll file
-        run: |
-          touch out/.nojekyll
-          cp README.md out/
 
       - name: Configure Pages
         uses: actions/configure-pages@v4
