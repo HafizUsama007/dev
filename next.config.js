@@ -7,11 +7,6 @@ const nextConfig = {
   basePath: '/dev',
   assetPrefix: '/dev/',
   trailingSlash: true,
-  // Disable server features
-  experimental: {
-    serverActions: false,
-    serverComponents: false
-  },
   typescript: {
     ignoreBuildErrors: true
   }
